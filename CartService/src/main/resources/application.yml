@@ -1,0 +1,22 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: CART-SERVICE
+  config:
+    import: "optional:configserver:http://localhost:8087"  #optional makes connection to configServer  non-mandatory during start up
+
+# Below conf is for overriding default eureka server setting by default eureka server connects to 8761 port
+eureka:
+  registerWithEureka: true
+  fetchRegistry: true
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8781/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: mappings

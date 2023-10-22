@@ -1,0 +1,37 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: API-GATEWAY
+
+# Below conf is for overriding default eureka server setting by default eureka server connects to 8761 port
+eureka:
+  registerWithEureka: true
+  fetchRegistry: true
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8781/eureka/
+
+
+cloud:
+  gateway:
+    routes:
+      - id: CART-SERVICE
+        uri:
+          lb://CART-SERVICE
+        predicates:
+          - Path=/cart/**
+      - id: CUSTOMER-SERVICE
+        uri:
+          lb://CUSTOMER-SERVICE
+        predicates:
+          - Path=/customer/**
+
+
+logging:
+  level:
+    root: INFO
+    org:
+      springframework:
+         web: TRACE
